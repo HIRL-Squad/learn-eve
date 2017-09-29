@@ -63,16 +63,17 @@ people = {
     'schema': schema
 }
 
-picture_schema = {
-    'name': {'type': 'string'},
+test_schema = {
+    'name': {'type': 'string',
+             'unique': True},
+    'score': {'type': 'string'},
     'pic': {'type': 'media'}
 }
 
-picture = {
+test = {
     'resource_methods': ['GET', 'POST'],
-
-    'schema': picture_schema
+    'schema': test_schema
 }
 
 DOMAIN = {'people': people,
-          'picture': picture}
+          'test': test}
