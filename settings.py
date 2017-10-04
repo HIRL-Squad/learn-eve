@@ -63,17 +63,29 @@ people = {
     'schema': schema
 }
 
-test_schema = {
+test_result_schema = {
     'name': {'type': 'string',
              'unique': True},
     'score': {'type': 'string'},
     'pic': {'type': 'media'}
 }
 
-test = {
+test_data_schema = {
+    'test': {
+        'type': 'dict'
+    }
+}
+
+test_result = {
     'resource_methods': ['GET', 'POST'],
-    'schema': test_schema
+    'schema': test_result_schema
+}
+
+test_data = {
+    'resource_methods': ['GET', 'POST'],
+    'schema': test_data_schema
 }
 
 DOMAIN = {'people': people,
-          'test': test}
+          'testdata': test_data,
+          'testresult': test_result}
