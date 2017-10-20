@@ -76,6 +76,9 @@ test_data_schema = {
     },
     'result': {
         'type': 'dict'
+    },
+    'patient_id': {
+        'type': 'string'
     }
 }
 
@@ -89,6 +92,18 @@ test_data = {
     'schema': test_data_schema
 }
 
+
+test_list = {
+    'allowed_filters': ['*'],
+    'datasource': {
+        'source': 'testdata',
+        'projection': {'_id': 1,
+                       'patient_id': 1}
+    }
+}
+
+
 DOMAIN = {'people': people,
           'testdata': test_data,
-          'testresult': test_result}
+          'testresult': test_result,
+          'testlist': test_list}
