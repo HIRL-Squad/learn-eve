@@ -73,6 +73,9 @@ test_result_schema = {
 test_data_schema = {
     'test': {
         'type': 'dict'
+    },
+    'result': {
+        'type': 'dict'
     }
 }
 
