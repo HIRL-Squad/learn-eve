@@ -79,12 +79,21 @@ test_data_schema = {
     },
     'patient_id': {
         'type': 'string'
+    },
+    'patient_name': {
+        'type': 'string'
     }
 }
 
 test_result = {
-    'resource_methods': ['GET', 'POST'],
-    'schema': test_result_schema
+    'resource_methods': ['GET'],
+    'datasource': {
+        'source': 'testdata',
+        'projection': {'_id': 1,
+                       'patient_id': 1,
+                       'patient_name': 1,
+                       'result': 1}
+    }
 }
 
 test_data = {
@@ -98,7 +107,8 @@ test_list = {
     'datasource': {
         'source': 'testdata',
         'projection': {'_id': 1,
-                       'patient_id': 1}
+                       'patient_id': 1,
+                       'patient_name': 1}
     }
 }
 
