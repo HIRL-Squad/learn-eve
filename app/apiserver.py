@@ -1,9 +1,10 @@
 import datetime
 import json
+import logging
 
 import requests
 from eve import Eve
-from flask import request
+from flask import request, jsonify
 
 from app import app
 
@@ -31,10 +32,14 @@ class ApiServer(Eve):
         self.on_insert_testdata += on_insert_testdata_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
+        logHandler = logging.FileHandler('app.log')
+        logHandler.setLevel(logging.INFO)
+        self.logger.addHandler(logHandler)
+        self.logger.setLevel(logging.INFO)
 
 
 def mark_one():
     raw_data = request.get_json()
     response = requests.post(app.config['MARKER_API_URL'] + 'mark_one', json=raw_data)
-    return response
+    return jsonify(json.loads(response.text))
 
