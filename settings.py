@@ -1,3 +1,8 @@
+MARKER_API_URL = 'http://127.0.0.1:5001/'
+
+# Eve Global Config Overrides
+DATE_FORMAT = "%m/%d/%Y %H:%M:%S"
+
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 
 # Enable reads (GET), edits (PATCH), replacements (PUT) and deletes of
@@ -82,6 +87,13 @@ test_data_schema = {
     },
     'patient_name': {
         'type': 'string'
+    },
+    'dominant_hand': {
+        'type': 'string',
+        'allowed': ['left', 'right']
+    },
+    'date_of_birth': {
+        'type': 'datetime'
     }
 }
 
