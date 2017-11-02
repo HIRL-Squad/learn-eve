@@ -90,7 +90,7 @@ test_data_schema = {
     },
     'dominant_hand': {
         'type': 'string',
-        'allowed': ['left', 'right']
+        'allowed': ['left', 'right', 'both']
     },
     'date_of_birth': {
         'type': 'datetime'
