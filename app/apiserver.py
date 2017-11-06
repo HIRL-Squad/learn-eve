@@ -5,6 +5,9 @@ import logging
 import requests
 from eve import Eve
 from flask import request, jsonify, current_app
+from mongoengine import connect
+
+from Documents.patient import Patient
 
 
 def on_insert_testdata_callback(items):
@@ -16,10 +19,15 @@ def on_insert_testdata_callback(items):
         response = requests.post(current_app.config['MARKER_API_URL'] + 'mark', json={'vasCogBlock': vas_cog_block,
                                                                               'vasBlockSize': vas_block_size})
         item['result'] = json.loads(response.text)
-        item['patient_id'] = patient_info['patientId']
+        patient = Patient.objects(patient_id=patient_info['patientId']).first()
+        if patient is None:
+            patient = Patient(patient_id=patient_info['patientId'])
+        patient.patient_name = patient_info['patientName']
+        patient.dominant_hand = patient_info['dominantHand']
+        patient.date_of_birth = datetime.datetime.strptime(patient_info['dateOfBirth'], current_app.config['DATE_FORMAT'])
+        patient.save()
+        item['patient_id'] = patient.id
         item['patient_name'] = patient_info['patientName']
-        item['date_of_birth'] = patient_info['dateOfBirth']
-        item['dominant_hand'] = patient_info['dominantHand']
 
 
 def add_timestamp(response):
@@ -36,6 +44,7 @@ class ApiServer(Eve):
         logHandler.setLevel(logging.INFO)
         self.logger.addHandler(logHandler)
         self.logger.setLevel(logging.INFO)
+        connect('eve')
 
 
 def mark_one():

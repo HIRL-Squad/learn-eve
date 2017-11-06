@@ -68,6 +68,30 @@ people = {
     'schema': schema
 }
 
+patient_schema = {
+    'patient_id': {
+        'type': 'string',
+        'unique': True
+    },
+    'patient_name': {
+        'type': 'string',
+    },
+    'dominant_hand': {
+        'type': 'string',
+        'allowed': ['left', 'right', 'both']
+    },
+    'date_of_birth': {
+        'type': 'datetime'
+    }
+}
+
+patient = {
+    'item_title': 'patient',
+
+    'resource_methods': ['GET', 'POST'],
+    'schema': patient_schema
+}
+
 test_result_schema = {
     'name': {'type': 'string',
              'unique': True},
@@ -82,18 +106,16 @@ test_data_schema = {
     'result': {
         'type': 'dict'
     },
-    'patient_id': {
+    'patient_id':{
+        'type': 'objectid',
+        'data_relation': {
+            'resource': 'patient',
+            'field': '_id',
+            'embeddable': True
+        }
+    },
+    'patient_name':{
         'type': 'string'
-    },
-    'patient_name': {
-        'type': 'string'
-    },
-    'dominant_hand': {
-        'type': 'string',
-        'allowed': ['left', 'right', 'both']
-    },
-    'date_of_birth': {
-        'type': 'datetime'
     }
 }
 
@@ -126,6 +148,7 @@ test_list = {
 
 
 DOMAIN = {'people': people,
+          'patient': patient,
           'testdata': test_data,
           'testresult': test_result,
           'testlist': test_list}
