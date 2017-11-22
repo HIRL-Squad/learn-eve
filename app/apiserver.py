@@ -6,6 +6,7 @@ import requests
 from eve import Eve
 from flask import request, jsonify, current_app
 from mongoengine import connect
+from app.helper.dataprocessing import load_patient_info
 
 from Documents.patient import Patient
 
@@ -22,9 +23,7 @@ def on_insert_testdata_callback(items):
         patient = Patient.objects(patient_id=patient_info['patientId']).first()
         if patient is None:
             patient = Patient(patient_id=patient_info['patientId'])
-        patient.patient_name = patient_info['patientName']
-        patient.dominant_hand = patient_info['dominantHand']
-        patient.date_of_birth = datetime.datetime.strptime(patient_info['dateOfBirth'], current_app.config['DATE_FORMAT'])
+        load_patient_info(patient, patient_info)
         patient.save()
         item['patient_id'] = patient.id
         item['patient_name'] = patient_info['patientName']

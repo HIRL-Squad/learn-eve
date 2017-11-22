@@ -1,7 +1,7 @@
 MARKER_API_URL = 'http://127.0.0.1:5001/'
 
 # Eve Global Config Overrides
-DATE_FORMAT = "%m/%d/%Y %H:%M:%S"
+DATE_FORMAT = "%d/%m/%Y %H:%M:%S"
 
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 
@@ -82,6 +82,33 @@ patient_schema = {
     },
     'date_of_birth': {
         'type': 'datetime'
+    },
+    'assessment_date': {
+        'type': 'datetime'
+    },
+    'stroke_severity_scale':{
+        'type': 'integer'
+    },
+    'disability_score_mRS':{
+        'type': 'integer'
+    },
+    'years_of_education':{
+        'type': 'integer'
+    },
+    'ethnicity': {
+        'type': 'string',
+        'allowed': ['Chinese','Malay','Indian', 'Others']
+    },
+    'gender': {
+        'type': 'string',
+        'allowed': ['Male', 'Female']
+    },
+    'onset_of_stroke': {
+        'type': 'datetime'
+    },
+    'setting_of_assessment':{
+        'type': 'string',
+        'allowed': ['ward', 'clinic', 'community']
     }
 }
 
