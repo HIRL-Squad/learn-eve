@@ -136,6 +136,9 @@ test_data_schema = {
     'result': {
         'type': 'dict'
     },
+    'human_correction': {
+        'type': 'dict'
+    },
     'patient_id':{
         'type': 'objectid',
         'data_relation': {

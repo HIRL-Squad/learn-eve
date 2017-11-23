@@ -30,18 +30,17 @@ def on_insert_testdata_callback(items):
         item['patient_name'] = patient_info['patientName']
 
 
-def on_inserted_humancorrection_callback(items):
-    for item in items:
-        test_id = item['test_id']
-        corrections = item['corrections']
+def on_inserted_humancorrection_callback(request,lookup):
+    test_id = lookup['_id']
+    corrections = request.json['human_correction']
 
-        testdata = Testdata.objects(id=test_id).first()
-        if testdata is None:
-            raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
-        for i in corrections:
-            correctness = corrections[i] == testdata.test['vasCogBlock'][i]['vasQues']
-            testdata.result[i] = str(correctness)
-        testdata.save()
+    testdata = Testdata.objects(id=test_id).first()
+    if testdata is None:
+        raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
+    for i in corrections:
+        correctness = corrections[i] == testdata.test['vasCogBlock'][i]['vasQues']
+        testdata.result[i] = str(correctness)
+    testdata.save()
 
 
 def add_timestamp(response):
@@ -52,7 +51,7 @@ def add_timestamp(response):
 class ApiServer(Eve):
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
-        # self.on_inserted_humancorrection += on_inserted_humancorrection_callback
+        self.on_pre_PATCH_testdata += on_inserted_humancorrection_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         logHandler = logging.FileHandler('app.log')
