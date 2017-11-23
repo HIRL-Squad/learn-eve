@@ -4,6 +4,7 @@ MARKER_API_URL = 'http://127.0.0.1:5001/'
 DATE_FORMAT = "%d/%m/%Y %H:%M:%S"
 DATE_CREATED = "created_at"
 LAST_UPDATED = "updated_at"
+IF_MATCH = False
 
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 
