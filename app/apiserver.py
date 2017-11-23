@@ -6,13 +6,10 @@ import requests
 from eve import Eve
 from flask import request, jsonify, current_app
 from mongoengine import connect
-from app.helper.dataprocessing import load_patient_info
 
 from Documents.patient import Patient
 from Documents.testdata import Testdata
-
-from bson.objectid import ObjectId
-from pymongo import MongoClient
+from app.helper.dataprocessing import load_patient_info
 
 
 def on_insert_testdata_callback(items):
@@ -33,23 +30,18 @@ def on_insert_testdata_callback(items):
         item['patient_name'] = patient_info['patientName']
 
 
-def on_insert_humancorrection_callback(items):
+def on_inserted_humancorrection_callback(items):
     for item in items:
         test_id = item['test_id']
         corrections = item['corrections']
 
-        client = MongoClient()
-        db = client.eve
-        collection = db.testdata
-        testdata = collection.find_one({"_id": ObjectId(test_id)})
+        testdata = Testdata.objects(id=test_id).first()
         if testdata is None:
             raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
-        result = testdata['result']
         for i in corrections:
-            result[i] = str(result[i] == 'False')
-        collection.update_one({'_id': ObjectId(test_id)}, {'$set': {
-            'result': result
-        }}, upsert=False)
+            correctness = corrections[i] == testdata.test['vasCogBlock'][i]['vasQues']
+            testdata.result[i] = str(correctness)
+        testdata.save()
 
 
 def add_timestamp(response):
@@ -60,7 +52,7 @@ def add_timestamp(response):
 class ApiServer(Eve):
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
-        self.on_insert_humancorrection += on_insert_humancorrection_callback
+        self.on_inserted_humancorrection += on_inserted_humancorrection_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         logHandler = logging.FileHandler('app.log')
