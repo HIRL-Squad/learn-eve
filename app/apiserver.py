@@ -52,7 +52,7 @@ def add_timestamp(response):
 class ApiServer(Eve):
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
-        self.on_inserted_humancorrection += on_inserted_humancorrection_callback
+        # self.on_inserted_humancorrection += on_inserted_humancorrection_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         logHandler = logging.FileHandler('app.log')
