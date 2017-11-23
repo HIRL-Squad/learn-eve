@@ -46,7 +46,7 @@ def on_inserted_humancorrection_callback(items):
 
 def add_timestamp(response):
     for item in response['_items']:
-        item['_updated_total_seconds'] = (item['_updated'] - datetime.datetime(1970, 1, 1)).total_seconds()
+        item['_updated_total_seconds'] = (item['updated_at'] - datetime.datetime(1970, 1, 1)).total_seconds()
 
 
 class ApiServer(Eve):
