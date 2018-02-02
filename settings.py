@@ -1,3 +1,5 @@
+from app.auth.token import JwtAuth
+
 MARKER_API_URL = 'http://127.0.0.1:5001/'
 
 # Eve Global Config Overrides
@@ -117,8 +119,9 @@ patient_schema = {
 
 patient = {
     'item_title': 'patient',
-
+    'item_url': 'regex("[\d]{3,4}")',
     'resource_methods': ['GET', 'POST'],
+    'authentication': JwtAuth,
     'schema': patient_schema
 }
 
