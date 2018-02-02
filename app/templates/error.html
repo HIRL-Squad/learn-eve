@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{{message}} You will be redirected to login page in 5 seconds.
+{% endblock %}
+{% block scripts %}
+<script>
+     window.setTimeout(function(){
+
+       // Move to a new location or you can do something else
+       window.location.href = "/login";
+
+       }, 5000);
+
+ </script>
+{% endblock %}

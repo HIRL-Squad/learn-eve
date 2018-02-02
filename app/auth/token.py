@@ -3,7 +3,7 @@ from flask_jwt import JWT
 import jwt as jwt_package
 from jwt import DecodeError
 from werkzeug.security import safe_str_cmp
-from flask import current_app
+from flask import current_app, jsonify
 from app.user.models import User
 
 
@@ -18,7 +18,14 @@ def identity(payload):
     return User.objects(id=user_id).first()
 
 
+def jwt_auth_response_callback(access_token, identity):
+    return jsonify({'access_token': access_token.decode('utf-8'),
+                    'expires_in': str(current_app.config.get('JWT_EXPIRATION_DELTA'))})
+
+
 jwt = JWT(app=None, authentication_handler=authenticate, identity_handler=identity)
+
+jwt.auth_response_handler(jwt_auth_response_callback)
 
 
 def validate_token(token):

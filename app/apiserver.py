@@ -2,14 +2,16 @@ import datetime
 import json
 import logging
 
+import os
 import requests
 from eve import Eve
-from flask import request, jsonify, current_app
+from flask import request, jsonify, current_app, render_template
 from jwt import DecodeError
 from mongoengine import connect
 
 from Documents.patient import Patient
 from Documents.testdata import Testdata
+from app.extensions import admin, login_manager
 from app.helper.dataprocessing import load_patient_info
 from app.auth.token import jwt
 from app.user.models import User
@@ -54,10 +56,14 @@ def add_timestamp(response):
 
 def configure_extensions(server):
     jwt.init_app(server)
+    import app.admin.views
+    admin.init_app(server)
+    login_manager.init_app(server)
 
 
 def create_server():
-    server = ApiServer()
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    server = ApiServer(template_folder=dir_path+'/templates')
     server.config.from_object('app.config.DevelopmentConfig')
     server.configure()
     configure_error_handlers(server)
@@ -105,3 +111,7 @@ def configure_error_handlers(server):
     @server.errorhandler(jwt_package.InvalidTokenError)
     def jwt_invalid_token_handler(error):
         return 'Invalid token. Please log in again.', 401
+
+    @server.errorhandler(403)
+    def access_forbidden(error):
+        return render_template('error.html', message=str(error))

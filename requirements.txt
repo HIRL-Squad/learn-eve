@@ -1,4 +1,9 @@
+flask
+flask-login
+flask-wtf
+flask-admin
 Flask-JWT
+flask-mongoengine
 Eve
 requests
 mongoengine
