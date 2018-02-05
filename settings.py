@@ -155,19 +155,6 @@ test_data_schema = {
     }
 }
 
-human_correction_schema = {
-    'test_id': {
-        'type': 'objectid',
-        'data_relation': {
-            'resource': 'testdata',
-            'field': '_id',
-            'embeddable': True
-        }
-    },
-    'corrections': {
-        'type': 'dict'
-    }
-}
 
 test_result = {
     'resource_methods': ['GET'],
@@ -196,14 +183,9 @@ test_list = {
     }
 }
 
-human_correction = {
-    'resource_methods': ['GET', 'POST'],
-    'schema': human_correction_schema
-}
 
 DOMAIN = {'people': people,
           'patient': patient,
           'testdata': test_data,
           'testresult': test_result,
-          'humancorrection': human_correction,
           'testlist': test_list}

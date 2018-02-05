@@ -5,7 +5,7 @@ import logging
 import os
 import requests
 from eve import Eve
-from flask import request, jsonify, current_app, render_template
+from flask import request, jsonify, current_app, render_template, abort
 from jwt import DecodeError
 from mongoengine import connect
 
@@ -36,9 +36,10 @@ def on_insert_testdata_callback(items):
         item['patient_name'] = patient_info['patientName']
 
 
-def on_inserted_humancorrection_callback(request,lookup):
-    test_id = lookup['_id']
-    corrections = request.json['human_correction']
+def human_correction():
+    item = request.get_json()
+    test_id = item['test_id']
+    corrections = item['corrections']
 
     testdata = Testdata.objects(id=test_id).first()
     if testdata is None:
@@ -51,7 +52,9 @@ def on_inserted_humancorrection_callback(request,lookup):
               testdata.test['vasCogBlock'][i]['vasQues'],
               str(correctness))
               )
+    testdata.human_correction = corrections
     testdata.save(write_concern={'w': 1, 'fsync': True})
+    return 'Human correction successfully applied.', 200
 
 
 def on_fetched_item_testdata_callback(response):
@@ -83,11 +86,11 @@ def create_server():
 class ApiServer(Eve):
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
-        self.on_pre_PATCH_testdata += on_inserted_humancorrection_callback
         self.on_fetched_item_testdata += on_fetched_item_testdata_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         self.add_url_rule('/bootstrap', 'bootstrap', bootstrap, methods=['GET'])
+        self.add_url_rule('/humancorrection', 'humancorrection', human_correction,  methods=['POST'])
         logHandler = logging.FileHandler('app.log')
         logHandler.setLevel(logging.INFO)
         self.logger.addHandler(logHandler)
