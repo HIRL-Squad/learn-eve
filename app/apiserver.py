@@ -51,7 +51,7 @@ def on_inserted_humancorrection_callback(request,lookup):
               testdata.test['vasCogBlock'][i]['vasQues'],
               str(correctness))
               )
-    testdata.save()
+    testdata.save(write_concern={'w': 1, 'fsync': True})
 
 
 def on_fetched_item_testdata_callback(response):
