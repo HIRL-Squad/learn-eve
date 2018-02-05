@@ -121,7 +121,7 @@ patient = {
     'item_title': 'patient',
     'item_url': 'regex("[\d]{3,4}")',
     'resource_methods': ['GET', 'POST'],
-    'authentication': JwtAuth,
+    # 'authentication': JwtAuth,
     'schema': patient_schema
 }
 
