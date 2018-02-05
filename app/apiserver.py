@@ -49,6 +49,10 @@ def on_inserted_humancorrection_callback(request,lookup):
     testdata.save()
 
 
+def on_fetched_item_testdata_callback(response):
+    print(response['result'])
+
+
 def add_timestamp(response):
     for item in response['_items']:
         item['_updated_total_seconds'] = (item['updated_at'] - datetime.datetime(1970, 1, 1)).total_seconds()
@@ -75,6 +79,7 @@ class ApiServer(Eve):
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
         self.on_pre_PATCH_testdata += on_inserted_humancorrection_callback
+        self.on_fetched_item_testdata += on_fetched_item_testdata_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         self.add_url_rule('/bootstrap', 'bootstrap', bootstrap, methods=['GET'])
