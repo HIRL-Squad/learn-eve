@@ -48,13 +48,13 @@ def human_correction():
         correctness = corrections[i] == testdata.test['vasCogBlock'][i]['vasQues']
         testdata.result[i] = str(correctness)
         print('Block {0} correction {1} against vasQues {2} is:{3}'.format(i,
-              corrections[i],
-              testdata.test['vasCogBlock'][i]['vasQues'],
-              str(correctness))
+                                                                           corrections[i],
+                                                                           testdata.test['vasCogBlock'][i]['vasQues'],
+                                                                           str(correctness))
               )
     testdata.human_correction = corrections
     testdata.save(write_concern={'w': 1, 'fsync': True})
-    return 'Human correction successfully applied.', 200
+    return jsonify({'_status': 'OK'}), 200
 
 
 def on_fetched_item_testdata_callback(response):
@@ -75,7 +75,7 @@ def configure_extensions(server):
 
 def create_server():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    server = ApiServer(template_folder=dir_path+'/templates')
+    server = ApiServer(template_folder=dir_path + '/templates')
     server.config.from_object('app.config.DevelopmentConfig')
     server.configure()
     configure_error_handlers(server)
@@ -90,7 +90,7 @@ class ApiServer(Eve):
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         self.add_url_rule('/bootstrap', 'bootstrap', bootstrap, methods=['GET'])
-        self.add_url_rule('/humancorrection', 'humancorrection', human_correction,  methods=['POST'])
+        self.add_url_rule('/humancorrection', 'humancorrection', human_correction, methods=['POST'])
         logHandler = logging.FileHandler('app.log')
         logHandler.setLevel(logging.INFO)
         self.logger.addHandler(logHandler)
@@ -106,16 +106,16 @@ def mark_one():
 
 def bootstrap():
     user = User()
-    user.username='admin'
-    user.password='123456'
-    user.display_name='master'
+    user.username = 'admin'
+    user.password = '123456'
+    user.display_name = 'master'
     user.save()
 
 
 def configure_error_handlers(server):
     @server.errorhandler(DecodeError)
     def jwt_decode_error_handler(error):
-        return 'JWT decode error: '+str(error), 401
+        return 'JWT decode error: ' + str(error), 401
 
     @server.errorhandler(jwt_package.ExpiredSignatureError)
     def jwt_signature_expired_handler(error):
