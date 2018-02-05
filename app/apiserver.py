@@ -46,6 +46,11 @@ def on_inserted_humancorrection_callback(request,lookup):
     for i in corrections:
         correctness = corrections[i] == testdata.test['vasCogBlock'][i]['vasQues']
         testdata.result[i] = str(correctness)
+        print('Block {0} correction {1} against vasQues {2} is:{3}'.format(i,
+              corrections[i],
+              testdata.test['vasCogBlock'][i]['vasQues'],
+              str(correctness))
+              )
     testdata.save()
 
 
