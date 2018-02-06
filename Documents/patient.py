@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, DateTimeField, IntField, FloatField
+from mongoengine import Document, StringField, DateTimeField, IntField
 
 HANDEDNESS = ('left', 'right', 'both')
 
@@ -9,8 +9,8 @@ class Patient(Document):
     dominant_hand = StringField(choices=HANDEDNESS)
     date_of_birth = DateTimeField(required=True)
     assessment_date = DateTimeField(required=True)
-    stroke_severity_scale = IntField()
-    disability_score_mRS = IntField()
+    nihss = IntField()
+    mrs = IntField()
     years_of_education = IntField()
     ethnicity = StringField()
     gender = StringField()

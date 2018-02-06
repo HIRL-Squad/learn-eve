@@ -21,19 +21,15 @@ import jwt as jwt_package
 def on_insert_testdata_callback(items):
     for item in items:
         test = item['test']
-        patient_info = test['patientInfo']
-        vas_block_size = test['vasBlockSize']
-        vas_cog_block = test['vasCogBlock']
-        response = requests.post(current_app.config['MARKER_API_URL'] + 'mark', json={'vasCogBlock': vas_cog_block,
-                                                                                      'vasBlockSize': vas_block_size})
-        item['result'] = json.loads(response.text)
-        patient = Patient.objects(patient_id=patient_info['patientId']).first()
+        patient_info = test['patient_info']
+
+        patient = Patient.objects(patient_id=patient_info['patient_id']).first()
         if patient is None:
-            patient = Patient(patient_id=patient_info['patientId'])
+            patient = Patient(patient_id=patient_info['patient_id'])
         load_patient_info(patient, patient_info)
         patient.save()
         item['patient_id'] = patient.id
-        item['patient_name'] = patient_info['patientName']
+        item['patient_name'] = patient_info['patient_name']
 
 
 def human_correction():
@@ -45,11 +41,11 @@ def human_correction():
     if testdata is None:
         raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
     for i in corrections:
-        correctness = corrections[i] == testdata.test['vasCogBlock'][i]['vasQues']
+        correctness = corrections[i] == testdata.test['vas_cog_block'][i]['vas_ques']
         testdata.result[i] = str(correctness)
         print('Block {0} correction {1} against vasQues {2} is:{3}'.format(i,
                                                                            corrections[i],
-                                                                           testdata.test['vasCogBlock'][i]['vasQues'],
+                                                                           testdata.test['vas_cog_block'][i]['vas_ques'],
                                                                            str(correctness))
               )
     testdata.human_correction = corrections

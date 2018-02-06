@@ -91,10 +91,10 @@ patient_schema = {
     'assessment_date': {
         'type': 'datetime'
     },
-    'stroke_severity_scale':{
+    'nihss':{
         'type': 'integer'
     },
-    'disability_score_mRS':{
+    'mrs':{
         'type': 'integer'
     },
     'years_of_education':{
