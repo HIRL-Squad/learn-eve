@@ -136,9 +136,6 @@ test_data_schema = {
     'test': {
         'type': 'dict'
     },
-    'result': {
-        'type': 'dict'
-    },
     'human_correction': {
         'type': 'dict'
     },

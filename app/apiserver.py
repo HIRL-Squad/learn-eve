@@ -42,7 +42,7 @@ def human_correction():
         raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
     for i in corrections:
         correctness = corrections[i] == testdata.test['vas_cog_block'][i]['vas_ques']
-        testdata.result[i] = str(correctness)
+        testdata.test['result'][i] = str(correctness)
         print('Block {0} correction {1} against vasQues {2} is:{3}'.format(i,
                                                                            corrections[i],
                                                                            testdata.test['vas_cog_block'][i]['vas_ques'],
@@ -51,10 +51,6 @@ def human_correction():
     testdata.human_correction = corrections
     testdata.save(write_concern={'w': 1, 'fsync': True})
     return jsonify({'_status': 'OK'}), 200
-
-
-def on_fetched_item_testdata_callback(response):
-    print(response['result'])
 
 
 def add_timestamp(response):
@@ -82,7 +78,6 @@ def create_server():
 class ApiServer(Eve):
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
-        self.on_fetched_item_testdata += on_fetched_item_testdata_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         self.add_url_rule('/bootstrap', 'bootstrap', bootstrap, methods=['GET'])

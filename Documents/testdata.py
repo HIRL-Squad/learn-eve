@@ -8,6 +8,5 @@ class Testdata(DynamicDocument):
     patient_id = StringField()
     human_correction = DictField()
     test = DictField()
-    result = DictField()
     created_at = DateTimeField()
     updated_at = DateTimeField()
