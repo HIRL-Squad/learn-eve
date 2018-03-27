@@ -86,7 +86,7 @@ class ApiServer(Eve):
         logHandler.setLevel(logging.INFO)
         self.logger.addHandler(logHandler)
         self.logger.setLevel(logging.INFO)
-        connect('eve')
+        connect('eve', username='chi', password='D@feige666')
 
 
 def mark_one():
