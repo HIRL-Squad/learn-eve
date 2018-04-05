@@ -123,7 +123,7 @@ def configure_error_handlers(server):
 
 
 def check_current_apk_version():
-    dir = '\home\www\static'
-    name = os.listdir(dir)[0]
+    static_dir = '/home/www/static'
+    name = os.listdir(static_dir)[0]
     version = name.replace(".apk", "").replace("SDMT", "")
-    return jsonify({'_version_num': version, "_download_url" : dir + "\\" + name}), 200
+    return jsonify({'_version_num': version, "_download_url" : static_dir + "/" + name}), 200
