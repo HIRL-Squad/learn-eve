@@ -82,6 +82,7 @@ class ApiServer(Eve):
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         self.add_url_rule('/bootstrap', 'bootstrap', bootstrap, methods=['GET'])
         self.add_url_rule('/humancorrection', 'humancorrection', human_correction, methods=['POST'])
+        self.add_url_rule('/checkversion', 'checkversion',  check_current_apk_version, methods=['GET'])
         logHandler = logging.FileHandler('app.log')
         logHandler.setLevel(logging.INFO)
         self.logger.addHandler(logHandler)
@@ -119,3 +120,10 @@ def configure_error_handlers(server):
     @server.errorhandler(403)
     def access_forbidden(error):
         return render_template('error.html', message=str(error))
+
+
+def check_current_apk_version():
+    dir = '\home\www\static'
+    name = os.listdir(dir)[0]
+    version = name.replace(".apk", "").replace("SDMT", "")
+    return jsonify({'_version_num': version, "_download_url" : dir + "\\" + name}), 200
