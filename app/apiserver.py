@@ -130,4 +130,4 @@ def check_current_apk_version():
         if filename.__contains__("SDMT"):
             name = filename
     version = name.replace(".apk", "").replace("SDMT", "")
-    return jsonify({'_version_num': version, "_download_url" : static_dir + "\\" + name}), 200
+    return jsonify({'_version_num': version, "_download_url" : static_dir + "/" + name}), 200
