@@ -124,6 +124,10 @@ def configure_error_handlers(server):
 
 def check_current_apk_version():
     static_dir = '/home/www/static'
-    name = os.listdir(static_dir)[0]
+    namelist = os.listdir(static_dir)
+    name = ""
+    for filename in namelist:
+        if filename.__contains__("SDMT"):
+            name = filename
     version = name.replace(".apk", "").replace("SDMT", "")
     return jsonify({'_version_num': version, "_download_url" : static_dir + "/" + name}), 200
