@@ -4,6 +4,7 @@ MARKER_API_URL = 'http://127.0.0.1:5001/'
 
 MONGO_USERNAME = 'chi'
 MONGO_PASSWORD = 'D@feige666'
+MONGO_DBNAME = 'eve'
 
 # Eve Global Config Overrides
 DATE_FORMAT = "%d/%m/%Y %H:%M:%S"
