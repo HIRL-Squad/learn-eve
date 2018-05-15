@@ -7,3 +7,5 @@ flask-mongoengine
 Eve
 requests
 mongoengine
+opencv-python
+numpy
