@@ -5,7 +5,7 @@ import logging
 import os
 import requests
 from eve import Eve
-from flask import request, jsonify, current_app, render_template, abort, make_response
+from flask import request, jsonify, current_app, render_template, abort
 from jwt import DecodeError
 from mongoengine import connect
 
@@ -14,7 +14,6 @@ from Documents.testdata import Testdata
 from app.extensions import admin, login_manager
 from app.helper.dataprocessing import load_patient_info
 from app.auth.token import jwt
-from app.services.imageprocessing import render_test_result
 from app.user.models import User
 import jwt as jwt_package
 
@@ -54,13 +53,6 @@ def human_correction():
     return jsonify({'_status': 'OK'}), 200
 
 
-def get_test_image(test_id):
-    encoded_img = render_test_result(test_id)
-    response = make_response(encoded_img.tobytes())
-    response.headers['Content-Type'] = 'image/png'
-    return response
-
-
 def add_timestamp(response):
     for item in response['_items']:
         item['_updated_total_seconds'] = (item['updated_at'] - datetime.datetime(1970, 1, 1)).total_seconds()
@@ -91,7 +83,6 @@ class ApiServer(Eve):
         self.add_url_rule('/bootstrap', 'bootstrap', bootstrap, methods=['GET'])
         self.add_url_rule('/humancorrection', 'humancorrection', human_correction, methods=['POST'])
         self.add_url_rule('/checkversion', 'checkversion',  check_current_apk_version, methods=['GET'])
-        self.add_url_rule('/testimage/<test_id>','testimage', get_test_image, methods=['GET'])
         logHandler = logging.FileHandler('app.log')
         logHandler.setLevel(logging.INFO)
         self.logger.addHandler(logHandler)

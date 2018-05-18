@@ -1,8 +1,9 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, make_response
 from flask_login import login_required, login_user, logout_user
 
 from app.forms.login import LoginForm
 from app import app
+from app.services.imageprocessing import render_test_result
 from app.user.models import User
 
 
@@ -30,3 +31,16 @@ def login():
 def logout():
     logout_user()
     return redirect("/login")
+
+
+@app.route("/testimage/<test_id>")
+@login_required
+def get_test_image(test_id):
+    from timeit import default_timer as timer
+    start = timer()
+    encoded_img = render_test_result(test_id)
+    end = timer()
+    print(end - start)
+    response = make_response(encoded_img.tobytes())
+    response.headers['Content-Type'] = 'image/png'
+    return response
