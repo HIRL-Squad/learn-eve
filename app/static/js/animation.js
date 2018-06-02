@@ -1,6 +1,15 @@
 window.onload = prepareAnimation;
 var testdata = null;
 var requestIdList = [];
+var tickImg = loadImage("../static/img/check_bg.png", null);
+var crossImg = loadImage("../static/img/cross_bg.png", null);
+
+function loadImage(src, onload) {
+    var img = new Image();
+    img.onload = onload;
+    img.src = src;
+    return img;
+}
 
 function prepareAnimation() {
     var testId = document.getElementById("testId").innerText;
@@ -16,7 +25,7 @@ function prepareAnimation() {
             populateGrid(allDigitList);
             var count = Object.keys(allDigitList).length;
             for(var i=0;i<count; i++){
-                drawDigit(allDigitList[i], i);
+                drawDigitCell(allDigitList[i], i);
             }
         }
     });
@@ -59,7 +68,7 @@ function buildDigitBlock(i, vasCogBlock, container){
     var canvas = document.createElement("CANVAS");
     canvas.setAttribute("id", "canvas-"+i);
     canvas.setAttribute("height", 162);
-    canvas.setAttribute("weight", 180);
+    canvas.setAttribute("width", 180);
     canvas.setAttribute("onclick","playStrokes("+i+")");
     div.appendChild(canvas);
     container.appendChild(div);
@@ -140,7 +149,7 @@ function playAnimation(pathList, index) {
         // get lapsed time since last frame
         lapsed = current - first_frame_time;
 
-        var fetchResult = true;
+        var fetchResult;
         while(fetchResult = TryFetchNextPoint()){
             var x = pathList[path_i].point_list[i]['x'];
             var y = pathList[path_i].point_list[i]['y'];
@@ -152,29 +161,44 @@ function playAnimation(pathList, index) {
             //then we shall stop the animation
             if(i+1>=pathList[path_i].point_list.length)
                 if(path_i+1>=pathList.length)
+                {
+                    drawTickOrCross(index);
                     return;
+                }
         }
         requestIdList[index] = requestAnimationFrame(updateToPresentTime);
     }
 };
 
-function drawDigit(vasCogBlock, index){
-    var canvas = document.getElementById("canvas-"+index);
-    var context = canvas.getContext("2d");
-    context.beginPath();
-    context.lineWidth = 5;
-    context.lineCap="round";
+function drawDigitCell(vasCogBlock, index){
     var pathList = vasCogBlock.path_list;
 
     // if pathList is null or undefined, do nothing
     if(!pathList)
         return;
 
-    var vasQues = vasCogBlock.vas_ques;
+    drawDigit(pathList, index);
+    drawTickOrCross(index);
+}
+
+function drawDigit(pathList, index){
+    var canvas = document.getElementById("canvas-"+index);
+    var context = canvas.getContext("2d");
+    context.beginPath();
+    context.lineWidth = 5;
+    context.lineCap="round";
+
     for(var i =0; i<pathList.length; i++){
         drawOnCanvasContext(pathList[i].point_list, context);
     }
-    // TODO draw tick
+}
+
+function drawTickOrCross(index){
+    var canvas = document.getElementById("canvas-"+index);
+    var context = canvas.getContext("2d");
+    var result = testdata.test.result[index];
+    var img = result? tickImg:crossImg;
+    context.drawImage(img, 0, 0, context.canvas.width, context.canvas.height);
 }
 
 function drawOnCanvasContext(point_list, context){
