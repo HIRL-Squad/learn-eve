@@ -36,11 +36,12 @@ def logout():
 @app.route("/testimage/<test_id>")
 @login_required
 def get_test_image(test_id):
-    from timeit import default_timer as timer
-    start = timer()
-    encoded_img = render_test_result(test_id)
-    end = timer()
-    print(end - start)
-    response = make_response(encoded_img.tobytes())
-    response.headers['Content-Type'] = 'image/png'
-    return response
+    # from timeit import default_timer as timer
+    # start = timer()
+    # encoded_img = render_test_result_interactive(test_id)
+    # end = timer()
+    # print(end - start)
+    # response = make_response(encoded_img.tobytes())
+    # response.headers['Content-Type'] = 'image/png'
+    # return response
+    return render_template("admin/testresult.html", test_id=test_id)

@@ -18,7 +18,7 @@ class TestdataView(AuthModelView):
 
     def get_score(self, row):
         score = 0
-        max_score = 110 # TODO
+        max_score = len(row.test['vas_cog_block'])
         if row.test.get('result'):
             max_score = len(row.test['result'].values())
             for correctness in row.test['result'].values():

@@ -67,7 +67,7 @@ def configure_extensions(server):
 
 def create_server():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    server = ApiServer(template_folder=dir_path + '/templates')
+    server = ApiServer(template_folder=dir_path + '/templates', static_folder=dir_path + '/static')
     server.config.from_object('app.config.DevelopmentConfig')
     server.configure()
     configure_error_handlers(server)

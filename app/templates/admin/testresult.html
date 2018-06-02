@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/testresult.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+</head>
+<body>
+<div class="sdmt-hidden" id="testId">{{ test_id }}</div>
+<div class="grid-container" id="SDMTContainer">
+</div>
+
+</body>
+</html>
