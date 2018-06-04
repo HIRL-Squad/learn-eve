@@ -27,8 +27,8 @@
             {% else %}
             {{ form[c](pk=get_pk_value(row), display_value=get_value(row, c)) }}
             {% endif %}
-        {% elif name=='Test' %}
-            <a href="{{ get_score_link(row) }}">{{ get_score(row) }}</a>
+        {% elif name=='Result' %}
+            <a href="{{ get_score_link(row) }}">{{ get_value(row, c) }}</a>
         {% else %}
             {{ get_value(row, c) }}
         {% endif %}

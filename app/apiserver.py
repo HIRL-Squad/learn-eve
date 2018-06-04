@@ -30,6 +30,8 @@ def on_insert_testdata_callback(items):
         patient.save()
         item['patient_id'] = patient.id
         item['patient_name'] = patient_info['patient_name']
+        # bring result out to the root level
+        item['result'] = item['test'].result
 
 
 def human_correction():
@@ -37,20 +39,26 @@ def human_correction():
     test_id = item['test_id']
     corrections = item['corrections']
 
+    human_correction_backend(test_id, corrections)
+    return jsonify({'_status': 'OK'}), 200
+
+
+def human_correction_backend(test_id, corrections):
     testdata = Testdata.objects(id=test_id).first()
     if testdata is None:
         raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
     for i in corrections:
         correctness = corrections[i] == testdata.test['vas_cog_block'][i]['vas_ques']
         testdata.test['result'][i] = str(correctness)
+        testdata.result[i] = str(correctness)  # update root level result as well
         print('Block {0} correction {1} against vasQues {2} is:{3}'.format(i,
                                                                            corrections[i],
-                                                                           testdata.test['vas_cog_block'][i]['vas_ques'],
+                                                                           testdata.test['vas_cog_block'][i][
+                                                                               'vas_ques'],
                                                                            str(correctness))
               )
     testdata.human_correction = corrections
     testdata.save(write_concern={'w': 1, 'fsync': True})
-    return jsonify({'_status': 'OK'}), 200
 
 
 def add_timestamp(response):

@@ -67,22 +67,53 @@ function buildDigitBlock(i, vasCogBlock, container){
     //Create canvas
     var canvas = document.createElement("CANVAS");
     canvas.setAttribute("id", "canvas-"+i);
+    canvas.setAttribute("class","digit-canvas")
     canvas.setAttribute("height", 162);
     canvas.setAttribute("width", 180);
-    canvas.setAttribute("onclick","playStrokes("+i+")");
+    //Create overlay div
+    var overlayDiv = document.createElement("DIV");
+    overlayDiv.setAttribute("id", "digit-overlay-"+i);
+    overlayDiv.setAttribute("class", "digit-overlay");
+    var imgPlayButton = document.createElement("IMG");
+    imgPlayButton.setAttribute("class", "img-play-button");
+    imgPlayButton.setAttribute("src", "../static/img/playButton.png");
+    imgPlayButton.setAttribute("height", 162);
+    imgPlayButton.setAttribute("width", 180);
+    imgPlayButton.setAttribute("onclick","playStrokes("+i+")");
+    overlayDiv.appendChild(imgPlayButton);
+
     div.appendChild(canvas);
+    div.appendChild(overlayDiv);
     container.appendChild(div);
 }
 
 function playStrokes(index){
     var allDigitList = testdata.test.vas_cog_block;
-    playAnimation(allDigitList[index].path_list, index);
-}
-
-function playAnimation(pathList, index) {
+    var pathList = allDigitList[index].path_list;
     // If pathList is empty, do nothing
     if(!pathList)
         return;
+    disableOverlayClasses(index);
+    playAnimation(pathList, index);
+}
+
+function disableOverlayClasses(index){
+    var canvas = document.getElementById("canvas-"+index);
+    canvas.classList.remove("dim");
+    var overlayDiv = document.getElementById("digit-overlay-"+index);
+    overlayDiv.classList.remove("overlay");
+}
+
+function enableOverlayClasses(index){
+    var canvas = document.getElementById("canvas-"+index);
+    if(!canvas.classList.contains("dim"))
+        canvas.classList.add("dim");
+    var overlayDiv = document.getElementById("digit-overlay-"+index);
+    if(!overlayDiv.classList.contains("overlay"))
+        overlayDiv.classList.add("overlay");
+}
+
+function playAnimation(pathList, index) {
     // Stop existing animation, if any.
     if(requestIdList[index]){
         cancelAnimationFrame(requestIdList[index]);
@@ -162,6 +193,7 @@ function playAnimation(pathList, index) {
             if(i+1>=pathList[path_i].point_list.length)
                 if(path_i+1>=pathList.length)
                 {
+                    enableOverlayClasses(index);
                     drawTickOrCross(index);
                     return;
                 }
@@ -179,6 +211,7 @@ function drawDigitCell(vasCogBlock, index){
 
     drawDigit(pathList, index);
     drawTickOrCross(index);
+    enableOverlayClasses(index);
 }
 
 function drawDigit(pathList, index){

@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, make_response
 from flask_login import login_required, login_user, logout_user
 
+from Documents.testdata import Testdata
 from app.forms.login import LoginForm
 from app import app
 from app.services.imageprocessing import render_test_result
@@ -45,3 +46,14 @@ def get_test_image(test_id):
     # response.headers['Content-Type'] = 'image/png'
     # return response
     return render_template("admin/testresult.html", test_id=test_id)
+
+
+# Data migration
+@app.route("/data_migration")
+def data_migration():
+    for testdata in Testdata.objects():
+        result = testdata.test.get('result')
+        if result:
+            testdata.result = result
+            testdata.save()
+    return "OK", 200
