@@ -1,7 +1,6 @@
 from app.admin.base import AuthModelView
 
 
-
 def get_test_score(view, context, model, name):
     score = 0
     max_score = 0
