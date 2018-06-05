@@ -31,7 +31,7 @@ def on_insert_testdata_callback(items):
         item['patient_id'] = patient.id
         item['patient_name'] = patient_info['patient_name']
         # bring result out to the root level
-        item['result'] = item['test'].result
+        item['result'] = item['test']['result']
 
 
 def human_correction():
