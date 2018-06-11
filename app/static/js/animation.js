@@ -20,6 +20,7 @@ function prepareAnimation() {
             Accept: "application/json; charset=utf-8"
         },
         success: function (data) {
+            populateExampleRow();
             testdata = data;
             var allDigitList = testdata.test.vas_cog_block;
             populateGrid(allDigitList);
@@ -29,6 +30,22 @@ function prepareAnimation() {
             }
         }
     });
+}
+
+function populateExampleRow(){
+    var container = document.getElementById("SDMTExample");
+    var count = 9;
+    for (var i = 0; i < count * 2; i++) {
+        var remainder = i%18;
+        if(remainder < 9) {
+            var vas_ques = Math.floor(i/18)*9 + remainder + 1;
+            buildSymbolBlock(i, vas_ques, container);
+        }
+        if(remainder>=9){
+            var vas_ques = Math.floor(i/18)*9 + remainder - 9 + 1;
+            buildPrintDigitBlock(vas_ques, container);
+        }
+    }
 }
 
 function populateGrid(allDigitList) {
@@ -51,12 +68,26 @@ function buildSymbolBlock(i, vas_ques, container){
     //Create div
     var div = document.createElement("DIV");
     div.setAttribute("class", "grid-item");
+    div.setAttribute("height", 162);
+    div.setAttribute("width", 180);
     //Create img
     var img = document.createElement("IMG");
     img.setAttribute("height", 162);
     img.setAttribute("width", 180);
     img.setAttribute("src", "../static/img/vas"+vas_ques+".png");
     div.appendChild(img);
+    container.appendChild(div);
+}
+
+function buildPrintDigitBlock(vas_ques, container){
+    //Create div
+    var div = document.createElement("DIV");
+    div.setAttribute("class", "grid-item-digit");
+    div.setAttribute("height", 162);
+    div.setAttribute("width", 180);
+    div.innerText = vas_ques;
+    var fontSize = 162;
+    div.style.fontSize = fontSize + "px";
     container.appendChild(div);
 }
 
@@ -120,8 +151,8 @@ function playAnimation(pathList, index) {
         requestIdList[index] = null;
     }
 
-    var canvas = document.getElementById("canvas-"+index),
-        context = canvas.getContext("2d");
+    var canvas = document.getElementById("canvas-"+index);
+    var context = createContextForDrawing(canvas);
     // Clear canvas
     context.clearRect(0,0,canvas.width, canvas.height);
     // Initialization
@@ -133,8 +164,6 @@ function playAnimation(pathList, index) {
     var first_point_time = point_list[i]['t'];
 
     context.beginPath();
-    context.lineWidth = 5;
-    context.lineCap="round";
     context.moveTo(start_point_x, start_point_y);
     var first_frame_time = performance.now();
     var lapsed = 0;
@@ -216,10 +245,8 @@ function drawDigitCell(vasCogBlock, index){
 
 function drawDigit(pathList, index){
     var canvas = document.getElementById("canvas-"+index);
-    var context = canvas.getContext("2d");
+    var context = createContextForDrawing(canvas);
     context.beginPath();
-    context.lineWidth = 5;
-    context.lineCap="round";
 
     for(var i =0; i<pathList.length; i++){
         drawOnCanvasContext(pathList[i].point_list, context);
@@ -244,4 +271,12 @@ function drawOnCanvasContext(point_list, context){
         context.lineTo(point_list[i]['x'],point_list[i]['y']);
     }
     context.stroke();
+}
+
+function createContextForDrawing(canvas){
+    var context = canvas.getContext("2d");
+    context.lineWidth = 5;
+    context.strokeStyle = "#686565";
+    context.lineCap = "round";
+    return context;
 }
