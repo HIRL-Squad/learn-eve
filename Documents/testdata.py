@@ -11,3 +11,4 @@ class Testdata(DynamicDocument):
     result = DictField()
     created_at = DateTimeField()
     updated_at = DateTimeField()
+    device_info = DictField(default=None)

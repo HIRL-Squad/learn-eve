@@ -153,6 +153,9 @@ test_data_schema = {
     },
     'patient_name':{
         'type': 'string'
+    },
+    'device_info': {
+        'type': 'dict'
     }
 }
 
