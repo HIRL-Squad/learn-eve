@@ -155,7 +155,8 @@ test_data_schema = {
         'type': 'string'
     },
     'device_info': {
-        'type': 'dict'
+        'type': 'dict',
+        'nullable': True
     }
 }
 
