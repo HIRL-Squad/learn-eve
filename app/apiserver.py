@@ -8,6 +8,7 @@ from eve import Eve
 from flask import request, jsonify, current_app, render_template, abort
 from jwt import DecodeError
 from mongoengine import connect
+from werkzeug.utils import redirect
 
 from Documents.patient import Patient
 from Documents.testdata import Testdata
@@ -130,6 +131,10 @@ def configure_error_handlers(server):
     @server.errorhandler(403)
     def access_forbidden(error):
         return render_template('error.html', message=str(error))
+
+    @server.errorhandler(401)
+    def unauthorized_error_handler(error):
+        return redirect("/login")
 
 
 def check_current_apk_version():
