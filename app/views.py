@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import render_template, request, redirect, make_response
 from flask_login import login_required, login_user, logout_user
 
@@ -57,3 +59,13 @@ def data_migration():
             testdata.result = result
             testdata.save()
     return "OK", 200
+
+
+@app.after_request
+def after(response):
+    if response.status_code >= 400:
+        print(datetime.utcnow())
+        print(response.status)
+        print(response.headers)
+        print(response.get_data())
+    return response
