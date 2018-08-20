@@ -147,4 +147,8 @@ def check_current_apk_version():
         if filename.__contains__("SDMT"):
             name = filename
     version = name.replace(".apk", "").replace("SDMT", "")
-    return jsonify({'_version_num': version, "_download_url" : sub_dir + "/" + name}), 200
+    update_info = {'_version_num': version, "_download_url" : sub_dir + "/" + name}
+    with open(static_dir+'/appreadme.txt') as f:
+        release_notes = f.read()
+        update_info['_release_note'] = release_notes
+    return jsonify(update_info), 200
