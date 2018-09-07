@@ -104,6 +104,7 @@ class ApiServer(Eve):
 
 
 def mark_one():
+    raise NotImplementedError()
     raw_data = request.get_json()
     response = requests.post(current_app.config['MARKER_API_URL'] + 'mark_one', json=raw_data)
     return jsonify(json.loads(response.text))
