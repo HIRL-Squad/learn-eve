@@ -8,6 +8,7 @@ from eve import Eve
 from flask import request, jsonify, current_app, render_template, abort
 from jwt import DecodeError
 from mongoengine import connect
+from raven.contrib.flask import Sentry
 from werkzeug.utils import redirect
 
 from Documents.patient import Patient
@@ -72,6 +73,7 @@ def configure_extensions(server):
     import app.admin.views
     admin.init_app(server)
     login_manager.init_app(server)
+    sentry = Sentry(app)
 
 
 def create_server():

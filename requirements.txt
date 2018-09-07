@@ -9,3 +9,4 @@ requests
 mongoengine
 opencv-python
 numpy
+raven[flask]
