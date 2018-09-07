@@ -76,12 +76,12 @@ def configure_extensions(server):
     import app.admin.views
     admin.init_app(server)
     login_manager.init_app(server)
+    sentry.init_app(server)
 
 
 def create_server():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     server = ApiServer(template_folder=dir_path + '/templates', static_folder=dir_path + '/static')
-#     sentry.init_app(server)
     server.config.from_object('app.config.DevelopmentConfig')
     server.configure()
     configure_error_handlers(server)
@@ -90,6 +90,16 @@ def create_server():
 
 
 class ApiServer(Eve):
+    """
+        Workaround for https://github.com/pyeve/eve/issues/1087
+        """
+
+    def __getattr__(self, name):
+        if name in {"im_self", "im_func"}:
+            raise AttributeError("type object '%s' has no attribute '%s'" %
+                                 (self.__class__.__name__, name))
+        return super(ApiServer, self).__getattr__(name)
+
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
         self.on_fetched_resource_testlist += add_timestamp
