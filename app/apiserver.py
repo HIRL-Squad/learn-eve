@@ -19,6 +19,9 @@ from app.auth.token import jwt
 from app.user.models import User
 import jwt as jwt_package
 
+sentry = Sentry(
+    dsn='https://5be8a37ac67e46e49ac06fae5f387309:60f1c341ba6f4fdda945b23abb3099b8@sentry.io/1276358')
+
 
 def on_insert_testdata_callback(items):
     for item in items:
@@ -73,12 +76,12 @@ def configure_extensions(server):
     import app.admin.views
     admin.init_app(server)
     login_manager.init_app(server)
-    sentry = Sentry(server, dsn='https://5be8a37ac67e46e49ac06fae5f387309:60f1c341ba6f4fdda945b23abb3099b8@sentry.io/1276358')
 
 
 def create_server():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     server = ApiServer(template_folder=dir_path + '/templates', static_folder=dir_path + '/static')
+#     sentry.init_app(server)
     server.config.from_object('app.config.DevelopmentConfig')
     server.configure()
     configure_error_handlers(server)
