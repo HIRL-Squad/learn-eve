@@ -74,7 +74,6 @@ def configure_extensions(server):
     admin.init_app(server)
     login_manager.init_app(server)
     sentry = Sentry(server, dsn='https://5be8a37ac67e46e49ac06fae5f387309:60f1c341ba6f4fdda945b23abb3099b8@sentry.io/1276358')
-    sentry.init_app(server)
 
 
 def create_server():
