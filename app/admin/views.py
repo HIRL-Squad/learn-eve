@@ -1,3 +1,6 @@
+from flask_admin import model
+from flask_babelex import lazy_gettext
+
 from Documents.patient import Patient
 from Documents.testdata import Testdata
 from app.user.models import User, Role
@@ -8,5 +11,5 @@ from Documents.admin import PatientView, TestdataView
 
 for model in (User, Role, Patient, Testdata):
     admin.add_view(
-        locals()[model.__name__ + 'View'](model)
+        locals()[model.__name__ + 'View'](model, name=lazy_gettext(model.__name__))
     )

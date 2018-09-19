@@ -5,7 +5,8 @@ import logging
 import os
 import requests
 from eve import Eve
-from flask import request, jsonify, current_app, render_template, abort
+from flask import request, jsonify, current_app, render_template, abort, session
+from flask_babelex import Babel
 from jwt import DecodeError
 from mongoengine import connect
 from raven.contrib.flask import Sentry
@@ -77,11 +78,20 @@ def configure_extensions(server):
     admin.init_app(server)
     login_manager.init_app(server)
     sentry.init_app(server)
+    babel = Babel(server)
+
+    @babel.localeselector
+    def get_locale():
+        if request.args.get('lang'):
+            session['lang'] = request.args.get('lang')
+        return session.get('lang', 'en')
 
 
 def create_server():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    server = ApiServer(template_folder=dir_path + '/templates', static_folder=dir_path + '/static')
+    server = ApiServer(template_folder=dir_path + '/templates', static_folder=dir_path +
+                                                                              '/static',
+                       root_path=dir_path)
     server.config.from_object('app.config.DevelopmentConfig')
     server.configure()
     configure_error_handlers(server)

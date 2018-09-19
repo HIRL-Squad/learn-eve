@@ -1,0 +1,62 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-09-07 16:08+0800\n"
+"PO-Revision-Date: 2018-09-07 16:09+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: views.py:14
+msgid "Log in"
+msgstr "登陆"
+
+msgid "User"
+msgstr "用户"
+
+msgid "Role"
+msgstr "角色"
+
+msgid "Patient"
+msgstr "病人"
+
+msgid "Testdata"
+msgstr "测试结果"
+
+#: app/templates/admin/index.html
+msgid "Welcome to VasCog!"
+msgstr "欢迎来到认知测试！"
+
+#: app/templates/admin/model/testdata_list.html
+msgid "Patient Name"
+msgstr "病人姓名"
+
+msgid "Patient Id"
+msgstr "病人ID"
+
+msgid "Human Correction"
+msgstr "人为更正"
+
+msgid "Result"
+msgstr "测试分数"
+
+msgid "Created At"
+msgstr "创建于"
+
+msgid "Updated At"
+msgstr "更新于"
+
+msgid "Device Info"
+msgstr "设备信息"
+

@@ -100,3 +100,5 @@ ENV/
 # mypy
 .mypy_cache/
 workspace.xml
+analytics_index.html
+microblog_edit.html

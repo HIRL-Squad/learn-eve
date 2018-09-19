@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block access_control %}
-<a class="brand">Logout</a>
+      <a class="mr-2" href="/logout">Logout</a>
 {% endblock %}
 
 {% block body %}
-<H1>Welcome to VasCog!</H1>
+<H1>{{ get_text('Welcome to VasCog!') }}</H1>
 {% endblock %}

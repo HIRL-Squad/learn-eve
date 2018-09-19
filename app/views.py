@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import render_template, request, redirect, make_response
+from flask_babelex import lazy_gettext
 from flask_login import login_required, login_user, logout_user
 
 from Documents.testdata import Testdata
@@ -14,7 +15,7 @@ from app.user.models import User
 def login():
     form = LoginForm()
     if request.method == 'GET':
-        return render_template('login.html', form=form, page_title='Log in')
+        return render_template('login.html', form=form, page_title=lazy_gettext(u'Log in'))
     elif request.method == 'POST':
         if form.validate_on_submit():
             user = User.objects(username=form.username.data).first()
@@ -26,7 +27,7 @@ def login():
                     form.password.errors.append("Wrong Password")
             else:
                 form.username.errors.append("user doesn't exist")
-        return render_template('login.html', form=form, page_title='Log in')
+        return render_template('login.html', form=form, page_title=lazy_gettext(u'Log in'))
 
 
 @app.route("/logout")
