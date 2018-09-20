@@ -8,30 +8,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="text-center">Log-In</h1>
+                    <h1 class="text-center">{{ get_text('Log-In')}}</h1>
                     <form action="{{url_for('login')}}" class="form-horizontal" method="POST">
                         {{ form.hidden_tag() }}
                         <div class="form-group col-sm-5 mx-auto {% if form.username.errors %} has-error {% endif %}">
                             {{form.username.label()}}
                             <div>
-                            {{ form.username(placeholder="E.g. johndoe", class="form-control form-control-success") }}
+                            {{ form.username(placeholder=get_text("E.g. johndoe"),
+                                class="form-control
+                                form-control-success") }}
                             </div>
                             <div class="form-control-feedback text-danger">{{ form.username.errors[0] }}</div>
                         </div>
                         <div class="form-group col-sm-5 mx-auto {% if form.password.errors %} has-error {% endif %}">
                             {{form.password.label()}}
                             <div>
-                            {{ form.password(placeholder="Min. 6 Characters", class="form-control") }}
+                            {{ form.password(placeholder=get_text("Min. 6 Characters"),
+                                class="form-control") }}
                             </div>
                             <div class="form-control-feedback text-danger">{{ form.password.errors[0] }}</div>
                         </div>
                         <div class="col-sm-5 mx-auto row-fluid">
-                            <button class="btn btn-success btn-block" type="submit">Log In</button>
+                            <button class="btn btn-success btn-block"
+                                    type="submit">{{get_text('Log In')}}</button>
                         </div>
                     </form>
                     <div class="dropdown-divider">OR</div>
                     <div class="col-sm-5 mx-auto">
-                        <a class="btn btn-primary btn-block" href="/signup">Sign Up</a>
+                        <a class="btn btn-primary btn-block" href="/signup">{{get_text('Sign Up')}}</a>
                     </div>
                 </div>
             </div>

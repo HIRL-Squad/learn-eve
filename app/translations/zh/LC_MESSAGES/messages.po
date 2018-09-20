@@ -22,6 +22,9 @@ msgstr ""
 msgid "Log in"
 msgstr "登陆"
 
+msgid "Logout"
+msgstr "登出"
+
 msgid "User"
 msgstr "用户"
 
@@ -35,6 +38,9 @@ msgid "Testdata"
 msgstr "测试结果"
 
 #: app/templates/admin/index.html
+msgid "VasCog: Admin Portal"
+msgstr "认知测试:管理界面"
+
 msgid "Welcome to VasCog!"
 msgstr "欢迎来到认知测试！"
 
@@ -60,9 +66,64 @@ msgstr "更新于"
 msgid "Device Info"
 msgstr "设备信息"
 
+#: patient data page
 msgid "Dominant Hand"
 msgstr "惯用手"
 
 msgid "Date Of Birth"
 msgstr "出生日期"
 
+msgid "Assessment Date"
+msgstr "测试日期"
+
+msgid "Nihss"
+msgstr "脑卒中量表NIHSS"
+
+msgid "Mrs"
+msgstr "mRS"
+
+msgid "Years Of Education"
+msgstr "受教育年数"
+
+msgid "Ethnicity"
+msgstr "种族"
+
+msgid "Gender"
+msgstr "性别"
+
+msgid "Onset Of Stroke"
+msgstr "中风发作日期"
+
+msgid "Setting Of Assessment"
+msgstr "测试环境"
+
+# Log-in page
+msgid "Log-In"
+msgstr "登陆"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Please provide a username"
+msgstr "请提供一个用户名"
+
+msgid "Pick a secure password"
+msgstr "密码"
+
+msgid "Please give a longer password"
+msgstr "请提供至少6个字符的密码"
+
+msgid "Log In"
+msgstr "登陆"
+
+msgid "Sign Up"
+msgstr "注册"
+
+msgid "Min. 6 Characters"
+msgstr "至少6位"
+
+msgid "E.g. johndoe"
+msgstr "例如: johndoe"
+
+msgid "VasCog Admin Portal"
+msgstr "认知测试管理界面"

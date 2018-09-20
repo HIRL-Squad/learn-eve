@@ -15,7 +15,8 @@ from app.user.models import User
 def login():
     form = LoginForm()
     if request.method == 'GET':
-        return render_template('login.html', form=form, page_title=lazy_gettext(u'Log in'))
+        return render_template('login.html', form=form, page_title=lazy_gettext(u'Log in'),
+        get_text=lazy_gettext)
     elif request.method == 'POST':
         if form.validate_on_submit():
             user = User.objects(username=form.username.data).first()
@@ -27,7 +28,8 @@ def login():
                     form.password.errors.append("Wrong Password")
             else:
                 form.username.errors.append("user doesn't exist")
-        return render_template('login.html', form=form, page_title=lazy_gettext(u'Log in'))
+        return render_template('login.html', form=form, page_title=lazy_gettext(u'Log in'),
+                               get_text=lazy_gettext)
 
 
 @app.route("/logout")
