@@ -1,18 +1,38 @@
-from mongoengine import Document, StringField, DateTimeField, IntField
+from mongoengine import DynamicDocument, StringField, DateTimeField, IntField
 
-HANDEDNESS = ('left', 'right', 'both')
+HANDEDNESS = ['left', 'right', 'both']
 
 
-class Patient(Document):
+EDUCATION_LEVEL = ['Primary 6 and below',
+                   'Secondary 4 and below',
+                   'ITE Diploma',
+                   'Polytechnic Diploma',
+                   'Bachelor’s Degree',
+                   'Postgraduate Degree (Masters and above)']
+
+DEMENTIA_TYPE = [
+    "Vascular dementia",
+    "Alzheimer’s disease",
+    "Dementia from Parkinson’s disease (and similar disorders)",
+    "Dementia with Lewy bodies",
+    "Frontotemporal dementia (Pick's disease)",
+    "Creutzfeldt-Jakob disease",
+    "Huntington's disease",
+    "Normal pressure hydrocephalus",
+    "Wernicke-Korsakoff syndrome"
+]
+
+
+class Patient(DynamicDocument):
     patient_id = StringField(required=True, primary_key=True)
-    patient_name = StringField(required=True)
     dominant_hand = StringField(choices=HANDEDNESS)
-    date_of_birth = DateTimeField(required=True)
+    year_of_birth = IntField()
     assessment_date = DateTimeField(required=True)
-    nihss = IntField()
-    mrs = IntField()
-    years_of_education = IntField()
+    education = StringField()
     ethnicity = StringField()
     gender = StringField()
-    onset_of_stroke = DateTimeField()
-    setting_of_assessment = StringField()
+    income = StringField()
+    dementia_type = StringField()
+    general_note = StringField()
+    chronic_diseases = StringField()
+    site = StringField()

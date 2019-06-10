@@ -35,7 +35,6 @@ def on_insert_testdata_callback(items):
         load_patient_info(patient, patient_info)
         patient.save()
         item['patient_id'] = patient.id
-        item['patient_name'] = patient_info['patient_name']
         # bring result out to the root level
         item['result'] = item['test']['result']
 

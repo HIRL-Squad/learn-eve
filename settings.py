@@ -95,14 +95,8 @@ patient_schema = {
     'assessment_date': {
         'type': 'datetime'
     },
-    'nihss':{
-        'type': 'integer'
-    },
-    'mrs':{
-        'type': 'integer'
-    },
-    'years_of_education':{
-        'type': 'integer'
+    'education':{
+        'type': 'string'
     },
     'ethnicity': {
         'type': 'string',
@@ -112,12 +106,8 @@ patient_schema = {
         'type': 'string',
         'allowed': ['Male', 'Female']
     },
-    'onset_of_stroke': {
-        'type': 'datetime'
-    },
-    'setting_of_assessment':{
-        'type': 'string',
-        'allowed': ['ward', 'clinic', 'community']
+    'income_level':{
+        'type': 'string'
     }
 }
 
