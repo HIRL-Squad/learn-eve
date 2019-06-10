@@ -89,8 +89,8 @@ patient_schema = {
         'type': 'string',
         'allowed': ['left', 'right', 'both']
     },
-    'date_of_birth': {
-        'type': 'datetime'
+    'year_of_birth': {
+        'type': 'string'
     },
     'assessment_date': {
         'type': 'datetime'
@@ -106,8 +106,20 @@ patient_schema = {
         'type': 'string',
         'allowed': ['Male', 'Female']
     },
-    'income_level':{
+    'income':{
         'type': 'string'
+    },
+    'dementia_type':{
+        'type': 'string'
+    },
+    'general_note':{
+        'type': 'string'
+    },
+    'chronic_diseases': {
+        'type': 'string'
+    },
+    'site': {
+        'type':'string'
     }
 }
 
