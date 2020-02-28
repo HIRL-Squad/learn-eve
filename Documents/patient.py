@@ -1,4 +1,4 @@
-from mongoengine import DynamicDocument, StringField, DateTimeField, IntField
+from mongoengine import DynamicDocument, StringField, DateTimeField, IntField, BooleanField
 
 HANDEDNESS = ['left', 'right', 'both']
 
@@ -36,3 +36,4 @@ class Patient(DynamicDocument):
     general_note = StringField()
     chronic_diseases = StringField()
     site = StringField()
+    is_trial = BooleanField()

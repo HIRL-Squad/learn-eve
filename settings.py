@@ -120,6 +120,9 @@ patient_schema = {
     },
     'site': {
         'type':'string'
+    },
+    'is_trial': {
+        'type':'boolean'
     }
 }
 

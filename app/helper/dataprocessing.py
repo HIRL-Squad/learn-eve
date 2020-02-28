@@ -1,13 +1,15 @@
 import datetime
 
 from flask import current_app
-from mongoengine import StringField, IntField, DateTimeField
+from mongoengine import StringField, IntField, DateTimeField, BooleanField
 
 
 def cast_data_to_field_type(field, original):
     if isinstance(field,StringField):
         return original
     if isinstance(field,IntField):
+        return original
+    if isinstance(field,BooleanField):
         return original
     if isinstance(field,DateTimeField):
         return datetime.datetime.strptime(original, current_app.config['DATE_FORMAT'])
