@@ -10,6 +10,7 @@ MONGO_DBNAME = 'eve'
 DATE_FORMAT = "%d/%m/%Y %H:%M:%S"
 DATE_CREATED = "created_at"
 LAST_UPDATED = "updated_at"
+PAGINATION = False # turn off pagination
 IF_MATCH = False
 
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
