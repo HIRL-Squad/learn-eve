@@ -54,8 +54,8 @@ def human_correction_backend(test_id, corrections):
         raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
     for i in corrections:
         correctness = corrections[i] == testdata.test['vas_cog_block'][i]['vas_ques']
-        testdata.test['result'][i] = str(correctness)
-        testdata.result[i] = str(correctness)  # update root level result as well
+        testdata.test['result'][i] = correctness
+        testdata.result[i] = correctness  # update root level result as well
         print('Block {0} correction {1} against vasQues {2} is:{3}'.format(i,
                                                                            corrections[i],
                                                                            testdata.test['vas_cog_block'][i][
