@@ -53,7 +53,7 @@ def human_correction_backend(test_id, corrections):
     if testdata is None:
         raise FileNotFoundError("testdata with id {0} cannot be found in the database".format(test_id))
     for i in corrections:
-        correctness = corrections[i] == testdata.test['vas_cog_block'][i]['vas_ques']
+        correctness = int(corrections[i]) == int(testdata.test['vas_cog_block'][i]['vas_ques'])
         testdata.test['result'][i] = correctness
         testdata.result[i] = correctness  # update root level result as well
         print('Block {0} correction {1} against vasQues {2} is:{3}'.format(i,
