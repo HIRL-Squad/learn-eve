@@ -83,37 +83,44 @@ patient_schema = {
         'type': 'string',
         'unique': True
     },
-    'patient_name': {
+    'setting_of_assessment': {
         'type': 'string',
+        'allowed': ['test', 'trial']
     },
-    'dominant_hand': {
-        'type': 'string',
-        'allowed': ['left', 'right', 'both']
-    },
-    'year_of_birth': {
+    'level_of_education':{
         'type': 'string'
     },
     'assessment_date': {
         'type': 'datetime'
     },
-    'education':{
-        'type': 'string'
+    'assessment_date_calendar': {
+        'type': 'integer'
     },
-    'ethnicity': {
-        'type': 'string',
-        'allowed': ['Chinese','Malay','Indian', 'Others']
+    "date_of_birth": {
+        'type': 'datetime'
+    },
+    "date_of_birth_calendar": {
+        'type': 'integer'
     },
     'gender': {
         'type': 'string',
-        'allowed': ['Male', 'Female']
+        'allowed': ['Male', 'Female', 'male', 'female']
     },
-    'income':{
+    'ethnicity': {
+        'type': 'string',
+        'allowed': ['Chinese', 'Malay', 'Indian', 'Others', 'chinese', 'malay', 'indian', 'others']
+    },
+    'dominant_hand': {
+        'type': 'string',
+        'allowed': ['left', 'right', 'both']
+    },
+    'annual_income':{
         'type': 'string'
     },
-    'dementia_type':{
+    'option_of_money':{
         'type': 'string'
     },
-    'general_note':{
+    'note':{
         'type': 'string'
     },
     'chronic_diseases': {
@@ -121,15 +128,12 @@ patient_schema = {
     },
     'site': {
         'type':'string'
-    },
-    'is_trial': {
-        'type':'boolean'
     }
 }
 
 patient = {
     'item_title': 'patient',
-    'item_url': 'regex("[\d]{3,4}")',
+    'item_url': 'regex("/^[a-zA-Z0-9]{1,10}$/")',
     'resource_methods': ['GET', 'POST'],
     # 'authentication': JwtAuth,
     'schema': patient_schema
