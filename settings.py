@@ -133,7 +133,7 @@ patient_schema = {
 
 patient = {
     'item_title': 'patient',
-    'item_url': 'regex("/^[a-zA-Z0-9]{1,10}$/")',
+    'item_url': 'regex("[a-zA-Z0-9]{1,10}")',
     'resource_methods': ['GET', 'POST'],
     # 'authentication': JwtAuth,
     'schema': patient_schema
