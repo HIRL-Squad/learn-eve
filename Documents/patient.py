@@ -33,7 +33,7 @@ class Patient(DynamicDocument):
     setting_of_assessment = StringField()
     level_of_education = StringField()
     charleston_scale = ListField(StringField())
-    high_blood_pressure = IntField()
+    high_blood_pressure = ListField(IntField())
     high_cholesterol = FloatField()
     diabetes_mellitus = FloatField()
     assessment_date = DateTimeField()

@@ -11,7 +11,7 @@ def test_load_patient_info(test_client):
         "setting_of_assessment": "trial",
         "level_of_education": "Polytechnic Diploma",
         "charleston_scale": ["Dementia", "Leukemia"],
-        "high_blood_pressure": 120,
+        "high_blood_pressure": [80, 120],
         "high_cholesterol": 160,
         "diabetes_mellitus": 8,
         "assessment_date": "13/01/2021 12:00:00",

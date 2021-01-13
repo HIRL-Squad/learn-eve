@@ -103,7 +103,7 @@ patient_schema = {
         'type': 'list'
     },
     'high_blood_pressure': {
-        'type': 'number',
+        'type': 'list',
     },
     'high_cholesterol': {
         'type': 'number',
