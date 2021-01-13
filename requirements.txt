@@ -11,3 +11,4 @@ opencv-python
 numpy
 raven[flask]
 flask-babelex
+pytest

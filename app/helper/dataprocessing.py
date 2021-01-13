@@ -13,6 +13,7 @@ def cast_data_to_field_type(field, original):
         return original
     if isinstance(field,DateTimeField):
         return datetime.datetime.strptime(original, current_app.config['DATE_FORMAT'])
+    return original
 
 
 def load_patient_info(patient, patient_info):

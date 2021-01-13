@@ -83,6 +83,34 @@ patient_schema = {
         'type': 'string',
         'unique': True
     },
+    'visit': {
+        'type': 'string',
+        'allowed': ['baseline', 'six_months']
+    },
+    'current_medications': {
+        'type': 'string',
+    },
+    'occupation': {
+        'type': 'string',
+    },
+    'living_arrangements': {
+        'type': 'string',
+    },
+    'housing_type': {
+        'type': 'string',
+    },
+    'charleston_scale': {
+        'type': 'list'
+    },
+    'high_blood_pressure': {
+        'type': 'number',
+    },
+    'high_cholesterol': {
+        'type': 'number',
+    },
+    'diabetes_mellitus': {
+        'type': 'number',
+    },
     'setting_of_assessment': {
         'type': 'string',
         'allowed': ['test', 'trial']
@@ -123,11 +151,20 @@ patient_schema = {
     'note':{
         'type': 'string'
     },
-    'chronic_diseases': {
-        'type': 'string'
+    'sarc_f': {
+        'type': 'list'
     },
     'site': {
         'type':'string'
+    },
+    'mmse_score': {
+        'type': 'number',
+    },
+    'moca_score': {
+        'type': 'number',
+    },
+    'diagnosis': {
+        'type': 'list'
     }
 }
 

@@ -86,12 +86,15 @@ def configure_extensions(server):
         return session.get('lang', 'en')
 
 
-def create_server():
+def create_server(test=False):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     server = ApiServer(template_folder=dir_path + '/templates', static_folder=dir_path +
                                                                               '/static',
-                       root_path=dir_path)
-    server.config.from_object('app.config.DevelopmentConfig')
+                       root_path=dir_path, settings=dir_path + '/../settings.py')
+    if test:
+        server.config.from_object('app.config.TestingConfig')
+    else:
+        server.config.from_object('app.config.DevelopmentConfig')
     server.configure()
     configure_error_handlers(server)
     configure_extensions(server)
@@ -102,6 +105,10 @@ class ApiServer(Eve):
     """
         Workaround for https://github.com/pyeve/eve/issues/1087
         """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.connection = None
 
     def __getattr__(self, name):
         if name in {"im_self", "im_func"}:
@@ -122,7 +129,7 @@ class ApiServer(Eve):
         self.logger.setLevel(logging.INFO)
         mongo_username = self.config.get('MONGO_USERNAME', None)
         mongo_password = self.config.get('MONGO_PASSWORD', None)
-        connect('eve', username=mongo_username, password=mongo_password)
+        self.connection = connect('eve', username=mongo_username, password=mongo_password)
 
 
 def mark_one():

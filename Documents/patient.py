@@ -1,4 +1,4 @@
-from mongoengine import DynamicDocument, StringField, DateTimeField, IntField, BooleanField
+from mongoengine import DynamicDocument, StringField, DateTimeField, IntField, BooleanField, ListField, FloatField
 
 HANDEDNESS = ['left', 'right', 'both']
 
@@ -25,8 +25,17 @@ DEMENTIA_TYPE = [
 
 class Patient(DynamicDocument):
     patient_id = StringField(required=True, primary_key=True)
+    visit = StringField(required=True, choices=['baseline', 'six_months'])
+    current_medications = StringField()
+    occupation = StringField()
+    living_arrangements = StringField()
+    housing_type = StringField()
     setting_of_assessment = StringField()
     level_of_education = StringField()
+    charleston_scale = ListField(StringField())
+    high_blood_pressure = IntField()
+    high_cholesterol = FloatField()
+    diabetes_mellitus = FloatField()
     assessment_date = DateTimeField()
     assessment_calendar = IntField()
     date_of_birth = DateTimeField()
@@ -36,4 +45,8 @@ class Patient(DynamicDocument):
     annual_income = StringField()
     option_of_money = StringField()
     site = StringField()
+    sarc_f = ListField(IntField())
+    mmse_score = IntField()
+    moca_score = IntField()
+    diagnosis = ListField(StringField())
     note = StringField()
