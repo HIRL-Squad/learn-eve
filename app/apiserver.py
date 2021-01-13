@@ -42,6 +42,14 @@ def on_insert_testdata_callback(items):
 def human_correction():
     item = request.get_json()
     test_id = item['test_id']
+    patient_info = item.get("patient_info", None)
+    if patient_info:
+        patient = Patient.objects(patient_id=patient_info['patient_id']).first()
+        if patient is None:
+            return jsonify({'_status': 'Not found'}), 404
+        load_patient_info(patient, patient_info)
+        patient.save()
+
     corrections = item['corrections']
 
     human_correction_backend(test_id, corrections)
