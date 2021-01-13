@@ -48,5 +48,5 @@ class Patient(DynamicDocument):
     sarc_f = ListField(IntField())
     mmse_score = IntField()
     moca_score = IntField()
-    diagnosis = ListField(StringField())
+    diagnosis = StringField()
     note = StringField()

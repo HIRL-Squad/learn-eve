@@ -164,7 +164,7 @@ patient_schema = {
         'type': 'number',
     },
     'diagnosis': {
-        'type': 'list'
+        'type': 'string'
     }
 }
 

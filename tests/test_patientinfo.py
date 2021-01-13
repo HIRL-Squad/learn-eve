@@ -26,7 +26,7 @@ def test_load_patient_info(test_client):
         "sarc_f": [1, 2, 0, 1, 1],
         "mmse_score": 100,
         "moca_score": 100,
-        "diagnosis": ["NCI", "MCI", "Mild Dementia"],
+        "diagnosis": "NCI",
         "note": "This is our test patient."
     }
     from Documents.patient import Patient
