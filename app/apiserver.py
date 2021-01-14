@@ -74,6 +74,12 @@ def human_correction_backend(test_id, corrections):
     testdata.save(write_concern={'w': 1, 'fsync': True})
 
 
+def on_fetched_item_testdata_callback(response):
+    patient_info = Patient.objects(patient_id=response['patient_id']).first()
+    response['test']['patient_info'] = patient_info.to_mongo()
+    response['test']['patient_info']['patient_id'] = response['test']['patient_info'].pop('_id')
+
+
 def add_timestamp(response):
     for item in response['_items']:
         item['_updated_total_seconds'] = (item['updated_at'] - datetime.datetime(1970, 1, 1)).total_seconds()
@@ -126,6 +132,7 @@ class ApiServer(Eve):
 
     def configure(self):
         self.on_insert_testdata += on_insert_testdata_callback
+        self.on_fetched_item_testdata += on_fetched_item_testdata_callback
         self.on_fetched_resource_testlist += add_timestamp
         self.add_url_rule('/mark_one', 'mark_one', mark_one, methods=['POST'])
         self.add_url_rule('/bootstrap', 'bootstrap', bootstrap, methods=['GET'])
