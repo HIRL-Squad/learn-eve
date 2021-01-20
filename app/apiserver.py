@@ -29,6 +29,7 @@ def on_insert_testdata_callback(items):
         test = item['test']
         patient_info = test['patient_info']
         if not patient_info['patient_id']:
+            patient_info.pop("patient_id")
             seed = PatientIdSeed.objects.first()
             while not seed.modify(inc__counter=1):
                 continue
