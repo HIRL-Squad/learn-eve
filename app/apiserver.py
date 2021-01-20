@@ -12,7 +12,7 @@ from mongoengine import connect
 from raven.contrib.flask import Sentry
 from werkzeug.utils import redirect
 
-from Documents.patient import Patient
+from Documents.patient import Patient, PatientIdSeed
 from Documents.testdata import Testdata
 from app.extensions import admin, login_manager
 from app.helper.dataprocessing import load_patient_info
@@ -28,10 +28,15 @@ def on_insert_testdata_callback(items):
     for item in items:
         test = item['test']
         patient_info = test['patient_info']
-
-        patient = Patient.objects(patient_id=patient_info['patient_id']).first()
-        if patient is None:
-            patient = Patient(patient_id=patient_info['patient_id'])
+        if not patient_info['patient_id']:
+            seed = PatientIdSeed.objects.first()
+            while not seed.modify(inc__counter=1):
+                continue
+            patient = Patient(patient_id=seed.counter)
+        else:
+            patient = Patient.objects(patient_id=patient_info['patient_id']).first()
+            if patient is None:
+                patient = Patient(patient_id=patient_info['patient_id'])
         load_patient_info(patient, patient_info)
         patient.save()
         item['patient_id'] = patient.id

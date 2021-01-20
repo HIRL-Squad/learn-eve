@@ -1,4 +1,5 @@
-from mongoengine import DynamicDocument, StringField, DateTimeField, IntField, BooleanField, ListField, FloatField
+from mongoengine import DynamicDocument, StringField, DateTimeField, IntField, BooleanField, ListField, FloatField, \
+    Document
 
 HANDEDNESS = ['left', 'right', 'both']
 
@@ -21,6 +22,10 @@ DEMENTIA_TYPE = [
     "Normal pressure hydrocephalus",
     "Wernicke-Korsakoff syndrome"
 ]
+
+
+class PatientIdSeed(Document):
+    counter = IntField(default=30000000)
 
 
 class Patient(DynamicDocument):

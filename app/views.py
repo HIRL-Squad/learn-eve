@@ -56,11 +56,11 @@ def get_test_image(test_id):
 # Data migration
 @app.route("/data_migration")
 def data_migration():
-    for testdata in Testdata.objects():
-        result = testdata.test.get('result')
-        if result:
-            testdata.result = result
-            testdata.save()
+    from Documents.patient import PatientIdSeed
+    seed = PatientIdSeed.objects.first()
+    if not seed:
+        seed = PatientIdSeed()
+        seed.save()
     return "OK", 200
 
 
