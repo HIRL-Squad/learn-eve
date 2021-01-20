@@ -32,7 +32,7 @@ def on_insert_testdata_callback(items):
             seed = PatientIdSeed.objects.first()
             while not seed.modify(inc__counter=1):
                 continue
-            patient = Patient(patient_id=seed.counter)
+            patient = Patient(patient_id=str(seed.counter))
         else:
             patient = Patient.objects(patient_id=patient_info['patient_id']).first()
             if patient is None:
