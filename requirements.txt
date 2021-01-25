@@ -4,7 +4,7 @@ flask-wtf
 flask-admin
 Flask-JWT
 flask-mongoengine
-Eve
+Eve==1.1.4
 requests
 mongoengine
 opencv-python
