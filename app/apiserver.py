@@ -51,9 +51,12 @@ def human_correction():
     patient_info = item.get("patient_info", None)
     if patient_info:
         patient = Patient.objects(patient_id=patient_info['patient_id']).first()
-        if patient is None:
+        testdata = Testdata.objects(id=test_id).first()
+        if patient is None or testdata is None:
             return jsonify({'_status': 'Not found'}), 404
         load_patient_info(patient, patient_info)
+        testdata.test['patient_info'] = patient_info
+        testdata.save()
         patient.save()
 
     corrections = item['corrections']
@@ -87,7 +90,7 @@ def on_fetched_item_testdata_callback(response):
     response['test']['patient_info']['patient_id'] = response['test']['patient_info'].pop('_id')
     residue_items = ['high_blood_pressure', 'setting_of_assessment', 'assessment_date_calendar', 'visit',
                      'current_medications', 'mmse_score', 'assessment_date', 'moca_score', 'diabetes_mellitus',
-                     'high_cholesterol', 'diagnosis', 'charleston_scale', 'note']
+                     'high_cholesterol', 'diagnosis', 'charleston_scale', 'note', 'sarc_f']
     # for some items in the patient info we don't want to see the latest but the time when they take the test
     for item in residue_items:
         response['test']['patient_info'][item] = residue[item]
