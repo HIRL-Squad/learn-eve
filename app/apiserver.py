@@ -82,8 +82,15 @@ def human_correction_backend(test_id, corrections):
 
 def on_fetched_item_testdata_callback(response):
     patient_info = Patient.objects(patient_id=response['patient_id']).first()
+    residue = response['test']['patient_info']
     response['test']['patient_info'] = patient_info.to_mongo()
     response['test']['patient_info']['patient_id'] = response['test']['patient_info'].pop('_id')
+    residue_items = ['high_blood_pressure', 'setting_of_assessment', 'assessment_date_calendar', 'visit',
+                     'current_medications', 'mmse_score', 'assessment_date', 'moca_score', 'diabetes_mellitus',
+                     'high_cholesterol', 'diagnosis', 'charleston_scale', 'note']
+    # for some items in the patient info we don't want to see the latest but the time when they take the test
+    for item in residue_items:
+        response['test']['patient_info'][item] = residue[item]
 
 
 def add_timestamp(response):
