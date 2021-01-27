@@ -93,7 +93,8 @@ def on_fetched_item_testdata_callback(response):
                      'high_cholesterol', 'diagnosis', 'charleston_scale', 'note', 'sarc_f']
     # for some items in the patient info we don't want to see the latest but the time when they take the test
     for item in residue_items:
-        response['test']['patient_info'][item] = residue[item]
+        if residue.get(item, None):
+            response['test']['patient_info'][item] = residue[item]
 
 
 def add_timestamp(response):
