@@ -13,7 +13,7 @@ def get_test_score(view, context, model, name):
 
 
 class PatientView(AuthModelView):
-    pass
+    column_filters = ('patient_id',)
 
 
 class TestdataView(AuthModelView):
