@@ -221,7 +221,7 @@ test_result = {
 }
 
 test_data = {
-    'resource_methods': ['GET', 'POST', 'PATCH'],
+    'resource_methods': ['GET', 'POST'],
     'item_methods': ['GET', 'PATCH'],
     'schema': test_data_schema
 }
