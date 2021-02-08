@@ -172,6 +172,7 @@ patient = {
     'item_title': 'patient',
     'item_url': 'regex("[a-zA-Z0-9]{1,10}")',
     'resource_methods': ['GET', 'POST'],
+    'item_methods': ['GET', 'PATCH'],
     # 'authentication': JwtAuth,
     'schema': patient_schema
 }
@@ -220,7 +221,8 @@ test_result = {
 }
 
 test_data = {
-    'resource_methods': ['GET', 'POST'],
+    'resource_methods': ['GET', 'POST', 'PATCH'],
+    'item_methods': ['GET', 'PATCH'],
     'schema': test_data_schema
 }
 
