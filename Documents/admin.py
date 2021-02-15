@@ -18,6 +18,7 @@ class PatientView(AuthModelView):
 
 
 class TestdataView(AuthModelView):
+    can_export = True
     list_template = 'admin/model/testdata_list.html'
     column_default_sort = ('updated_at', True)
     column_filters = ('patient_id', 'patient_name')
