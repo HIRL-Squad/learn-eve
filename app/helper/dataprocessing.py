@@ -21,3 +21,5 @@ def load_patient_info(patient, patient_info):
         if field_name in patient._fields:
             casted_data = cast_data_to_field_type(patient._fields[field_name], patient_info[field_name])
             patient[field_name] = casted_data
+        else:
+            patient[field_name] = patient_info[field_name]
