@@ -170,7 +170,7 @@ patient_schema = {
 
 patient = {
     'item_title': 'patient',
-    'item_url': 'regex("[a-zA-Z0-9]{1,10}")',
+    'item_url': 'regex(".{1,100}")',
     'resource_methods': ['GET', 'POST'],
     'item_methods': ['GET', 'PATCH'],
     'allow_unknown': True,
