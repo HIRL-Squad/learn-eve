@@ -60,40 +60,27 @@ def data_migration():
     import bcrypt
     with open('data.txt') as json_file:
         data = json.load(json_file)
-        salt = '$2b$09$cVWp4XaNU8a4v1uMRum2SO'.encode()
         count = 0
+        testdata_delete = []
         patient_list = list(Patient.objects())
+        ids_to_keep = []
+        ids_to_keep_original = []
         for old_id_str in data:
             for i in range(len(patient_list) - 1, -1, -1):
                 patient = patient_list[i]
                 if len(patient.patient_id) <= 32:
                     continue
                 if bcrypt.checkpw(old_id_str.encode(), patient.patient_id.encode()):
-                    new_hash_bytes = bcrypt.hashpw(old_id_str.encode(), salt)
-                    new_hash = new_hash_bytes.decode('utf-8')
-                    inner_count = 0
-                    print("{}, {}".format(old_id_str, new_hash))
+                    print("{}, {}".format(old_id_str, patient.patient_id))
                     count += 1
                     for testdata in Testdata.objects(patient_id=patient.patient_id):
-                        testdata.patient_id = new_hash
-                        testdata.test['patient_info']['patient_id'] = new_hash
-                        testdata.save()
-                        inner_count += 1
-                    # if inner_count:
-                    #     print("{} testdata updated".format(inner_count))
-                    new_patient = Patient()
-                    for field in Patient._fields:
-                        new_patient[field] = patient[field]
-                    new_patient.patient_id = new_hash
-                    new_patient.visit = patient.visit if patient.visit else 'baseline'
-                    try:
-                        new_patient.save(force_insert=True)
-                    except NotUniqueError:
-                        print("Failure Case!")
-                    patient.delete()
+                        testdata_delete.append(testdata)
                     patient_list.remove(patient)
+                    ids_to_keep.append(patient.patient_id)
+                    ids_to_keep_original.append(old_id_str)
                     break
-        print("{} out of {} old hashes reverted".format(count, len(data)))
+        print("{} out of {} IDs found".format(count, len(data)))
+        print(set(data) - set(ids_to_keep_original))
 
     return "OK", 200
 
